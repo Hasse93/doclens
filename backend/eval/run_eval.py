@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -49,10 +50,17 @@ def _cosine(a: list[float], b: list[float]) -> float:
     return dot / (na * nb) if na and nb else 0.0
 
 
-def build_index(llm: LLMProvider, pdf_path: Path) -> list[IndexedChunk]:
+def build_index(llm: LLMProvider, pdf_path: Path, pace: float = 0.0) -> list[IndexedChunk]:
     chunks = chunk_pages(extract_pages(pdf_path.read_bytes()))
-    vectors = llm.embed([c.content for c in chunks])
-    return [IndexedChunk(c.page_number, c.content, v) for c, v in zip(chunks, vectors)]
+    # Embed one chunk per call when pacing, so a whole paper does not exceed the
+    # free-tier per-minute token limit in a single large request.
+    indexed: list[IndexedChunk] = []
+    for chunk in chunks:
+        vector = llm.embed([chunk.content])[0]
+        indexed.append(IndexedChunk(chunk.page_number, chunk.content, vector))
+        if pace:
+            time.sleep(pace)
+    return indexed
 
 
 def retrieve(llm: LLMProvider, index: list[IndexedChunk], question: str, k: int) -> list[IndexedChunk]:
@@ -70,12 +78,28 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate DocLens retrieval and answers.")
     parser.add_argument("--fake", action="store_true", help="Use a fake LLM (no API key).")
     parser.add_argument("--top-k", type=int, default=settings.retrieval_top_k)
+    parser.add_argument(
+        "--pace",
+        type=float,
+        default=0.0,
+        help="Seconds to pause between API calls, to stay under free-tier rate limits.",
+    )
+    parser.add_argument(
+        "--files",
+        nargs="*",
+        default=None,
+        help="Limit evaluation to these sample filenames (default: all in the dataset).",
+    )
     args = parser.parse_args()
+    pace = 0.0 if args.fake else args.pace
 
     llm = _FakeLLM() if args.fake else _real_llm()
 
     dataset = json.loads(DATASET_PATH.read_text(encoding="utf-8"))
     cases = dataset["cases"]
+    if args.files:
+        wanted = set(args.files)
+        cases = [c for c in cases if c["file"] in wanted]
 
     # Build one index per referenced file (reused across that file's questions).
     indexes: dict[str, list[IndexedChunk]] = {}
@@ -84,7 +108,9 @@ def main() -> int:
         if not pdf.exists():
             print(f"Missing sample: {pdf}. Run scripts/fetch_samples.py first.")
             return 1
-        indexes[filename] = build_index(llm, pdf)
+        indexes[filename] = build_index(llm, pdf, pace)
+        if pace:
+            time.sleep(pace)
 
     retrieval_hits = 0
     answer_hits = 0
@@ -108,6 +134,8 @@ def main() -> int:
         flag = "OK " if retrieval_ok else "MISS"
         print(f"[{flag}] {case['file']:<30} {case['question'][:34]:<34} "
               f"retr={'Y' if retrieval_ok else 'n'} ans={'Y' if answer_ok else 'n'}")
+        if pace:
+            time.sleep(pace)
 
     n = len(cases)
     print("-" * 72)

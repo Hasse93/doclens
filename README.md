@@ -169,17 +169,24 @@ set over the sample papers — the kind of check that keeps a RAG system honest.
 
 ```bash
 cd backend
-python -m eval.run_eval            # needs GEMINI_API_KEY + fetched samples
+python -m eval.run_eval --pace 5   # needs GEMINI_API_KEY + fetched samples
 python -m eval.run_eval --fake     # smoke-test the harness without a key
 ```
 
 It reports **retrieval hit-rate** (did the retrieved passages contain the
 expected information?) and **answer accuracy** (did the generated answer?).
 
-> Embedding all sample papers in one run can exceed the Gemini **free-tier
-> embedding quota** (HTTP 429). The provider already batches embeddings and
-> retries with backoff; if you still hit the cap, run on a smaller dataset, wait
-> for the quota to reset, or use a paid key.
+Latest run (Gemini, 9 questions across the four sample papers):
+
+```
+Retrieval hit-rate : 9/9  (100%)
+Answer accuracy    : 9/9  (100%)
+```
+
+> On the Gemini **free tier**, embedding a whole paper at once can exceed the
+> per-minute token limit (HTTP 429). `--pace N` embeds one chunk every `N`
+> seconds to stay under it; the provider also retries with backoff. On a paid
+> key you can drop `--pace`.
 
 ## Project layout
 
