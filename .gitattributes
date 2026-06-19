@@ -1,0 +1,7 @@
+# Normalise line endings to LF in the repository (the app runs in Linux containers).
+* text=auto eol=lf
+
+# Keep binary assets untouched.
+*.pdf binary
+*.png binary
+*.jpg binary

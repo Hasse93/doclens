@@ -1,0 +1,50 @@
+{
+  "description": "Labelled questions for evaluating retrieval and answer quality on the sample arXiv papers. Each keyword list is treated as synonyms: a case passes if any keyword is present. Fetch the PDFs first with scripts/fetch_samples.py.",
+  "cases": [
+    {
+      "file": "attention-is-all-you-need.pdf",
+      "question": "What model architecture does this paper introduce?",
+      "expected_keywords": ["transformer"]
+    },
+    {
+      "file": "attention-is-all-you-need.pdf",
+      "question": "What mechanism does the model rely on instead of recurrence?",
+      "expected_keywords": ["attention", "self-attention"]
+    },
+    {
+      "file": "attention-is-all-you-need.pdf",
+      "question": "What task is used to evaluate the model?",
+      "expected_keywords": ["translation"]
+    },
+    {
+      "file": "bert.pdf",
+      "question": "What kind of representations does BERT learn?",
+      "expected_keywords": ["bidirectional"]
+    },
+    {
+      "file": "bert.pdf",
+      "question": "What pre-training objective does BERT use to predict hidden tokens?",
+      "expected_keywords": ["masked"]
+    },
+    {
+      "file": "resnet.pdf",
+      "question": "What benchmark dataset is used for image classification?",
+      "expected_keywords": ["imagenet"]
+    },
+    {
+      "file": "resnet.pdf",
+      "question": "What idea do the authors use to ease training of very deep networks?",
+      "expected_keywords": ["residual"]
+    },
+    {
+      "file": "chexnet.pdf",
+      "question": "What medical condition does the model detect?",
+      "expected_keywords": ["pneumonia"]
+    },
+    {
+      "file": "chexnet.pdf",
+      "question": "What type of medical images does the model analyse?",
+      "expected_keywords": ["chest", "x-ray", "radiograph"]
+    }
+  ]
+}

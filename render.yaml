@@ -1,0 +1,40 @@
+# Render blueprint for the DocLens backend + a managed Postgres (with pgvector).
+# Deploy: push to GitHub, then "New > Blueprint" on https://render.com and pick
+# this repo. Set GEMINI_API_KEY and CORS_ORIGINS in the dashboard afterwards.
+
+databases:
+  - name: doclens-db
+    databaseName: doclens
+    user: doclens
+    plan: free
+
+services:
+  - type: web
+    name: doclens-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: doclens-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: CHAT_MODEL
+        value: gemini-2.5-flash
+      - key: EMBEDDING_MODEL
+        value: models/gemini-embedding-001
+      - key: EMBEDDING_DIMENSION
+        value: "768"
+      # Set these in the Render dashboard (do not commit secrets):
+      #   GEMINI_API_KEY  — your Gemini API key
+      #   CORS_ORIGINS    — your deployed frontend URL, e.g. https://doclens.vercel.app
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false

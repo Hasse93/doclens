@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+backend/storage/
+
+# Sample PDFs are fetched on demand, not committed (keep the manifest)
+samples/*.pdf
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+npm-debug.log*
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
