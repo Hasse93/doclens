@@ -1,5 +1,13 @@
 # DocLens — AI Document Intelligence Platform
 
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![Postgres](https://img.shields.io/badge/Postgres-pgvector-336791?logo=postgresql&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+
 DocLens reads uploaded documents, indexes them for semantic search, and answers
 questions with **citations back to the exact page**. It is built around a single
 RAG engine designed to serve two modes from the same core:
@@ -12,22 +20,35 @@ RAG engine designed to serve two modes from the same core:
 The pipeline — extract → chunk → embed → store → retrieve — is identical for
 both modes. Only the prompts, the extraction schema, and the output view change.
 
+> **Live demo:** _add your deployed URL here after following [DEPLOYMENT.md](DEPLOYMENT.md)._
+
 ## Architecture
 
-```
-Next.js (App Router)  ──HTTP──▶  FastAPI  ──▶  Postgres + pgvector
-                                    │
-                                    └──▶  LLM provider (Gemini, swappable)
+```mermaid
+flowchart LR
+    U[Browser] -->|HTTPS| FE[Next.js 15 App Router]
+    FE -->|REST + SSE| API[FastAPI]
+    API --> DB[(Postgres + pgvector)]
+    API -->|LLMProvider| LLM[Gemini\nchat + embeddings]
+
+    subgraph Ingestion
+      direction TB
+      PDF[PDF upload] --> EX[extract] --> CH[chunk] --> EM[embed] --> ST[(store vectors)]
+    end
+    API -.-> Ingestion
 ```
 
-| Concern        | Choice                                   |
-| -------------- | ---------------------------------------- |
-| Frontend       | Next.js 14, TypeScript, Tailwind CSS     |
-| Backend        | FastAPI, SQLAlchemy 2                     |
-| Database       | PostgreSQL with the `pgvector` extension |
-| PDF parsing    | PyMuPDF                                   |
-| LLM/embeddings | Gemini, behind an `LLMProvider` interface |
-| Auth           | JWT (bearer tokens)                      |
+The pipeline above is shared by both modes; only the prompts, the extraction
+schema, and the output view differ.
+
+| Concern        | Choice                                       |
+| -------------- | -------------------------------------------- |
+| Frontend       | Next.js 15, React 19, TypeScript, Tailwind   |
+| Backend        | FastAPI, SQLAlchemy 2                         |
+| Database       | PostgreSQL with the `pgvector` extension     |
+| PDF parsing    | PyMuPDF                                       |
+| LLM/embeddings | Gemini, behind an `LLMProvider` interface    |
+| Auth           | JWT (bearer tokens)                          |
 
 The `LLMProvider` abstraction (`backend/app/core/llm`) means no application code
 imports a vendor SDK directly — switching providers is a config change.
