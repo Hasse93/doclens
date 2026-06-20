@@ -20,7 +20,8 @@ RAG engine designed to serve two modes from the same core:
 The pipeline — extract → chunk → embed → store → retrieve — is identical for
 both modes. Only the prompts, the extraction schema, and the output view change.
 
-> **Live demo:** _add your deployed URL here after following [DEPLOYMENT.md](DEPLOYMENT.md)._
+> **Live demo:** **https://doclens-ecru.vercel.app** &nbsp;·&nbsp; API: https://doclens-api.onrender.com/docs
+> _(hosted on free tiers — the first request after idle can take ~30–50s while the backend wakes.)_
 
 ## Architecture
 
