@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { FileText, UploadCloud } from "lucide-react";
 
 import { api, ApiError } from "@/lib/api";
 
@@ -60,12 +61,18 @@ export default function UploadCard({
       <div className="mt-4 space-y-3">
         <label
           htmlFor={`file-${mode}-${role}`}
-          className="flex cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-slate-300 px-4 py-8 text-sm text-slate-500 transition hover:border-brand-400 hover:bg-brand-50/40"
+          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-4 py-8 text-sm text-slate-500 transition hover:border-brand-400 hover:bg-brand-50/40"
         >
           {file ? (
-            <span className="font-medium text-slate-700">{file.name}</span>
+            <>
+              <FileText className="h-6 w-6 text-brand-600" />
+              <span className="font-medium text-slate-700">{file.name}</span>
+            </>
           ) : (
-            <span>Click to choose a PDF</span>
+            <>
+              <UploadCloud className="h-6 w-6 text-slate-400" />
+              <span>Click to choose a PDF</span>
+            </>
           )}
           <input
             ref={inputRef}

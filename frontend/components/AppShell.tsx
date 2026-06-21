@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { FileText, LogOut, MessagesSquare, Users } from "lucide-react";
 
 import { useAuth } from "@/lib/auth";
 
 const NAV = [
-  { href: "/dashboard", label: "Research" },
-  { href: "/ask", label: "Ask" },
-  { href: "/recruitment", label: "Recruitment" },
+  { href: "/dashboard", label: "Research", icon: FileText },
+  { href: "/ask", label: "Ask", icon: MessagesSquare },
+  { href: "/recruitment", label: "Recruitment", icon: Users },
 ];
 
 /** Wraps authenticated pages: renders a header and guards against logged-out access. */
@@ -48,12 +49,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+                    className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition ${
                       active
                         ? "bg-brand-50 text-brand-700"
                         : "text-slate-500 hover:text-slate-900"
                     }`}
                   >
+                    <item.icon className="h-4 w-4" />
                     {item.label}
                   </Link>
                 );
@@ -64,8 +66,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <span className="hidden text-sm text-slate-500 sm:inline">{user.full_name}</span>
             <button
               onClick={logout}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
             >
+              <LogOut className="h-4 w-4" />
               Sign out
             </button>
           </div>

@@ -1,19 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight, Code2, Layers, ListChecks, Quote } from "lucide-react";
 
 import { useAuth } from "@/lib/auth";
 
 const FEATURES = [
   {
+    icon: Quote,
     title: "Cited answers",
     body: "Ask questions and get answers grounded in the source — every claim links back to the exact page.",
   },
   {
+    icon: ListChecks,
     title: "Structured extraction",
     body: "Pull clean, schema-validated fields from any document — methodology, datasets, skills, and more.",
   },
   {
+    icon: Layers,
     title: "Two modes, one engine",
     body: "Understand academic papers, or rank résumés against a job description — from the same RAG core.",
   },
@@ -65,16 +69,18 @@ export default function Home() {
         <div className="mt-8 flex items-center justify-center gap-3">
           <Link
             href={primaryHref}
-            className="rounded-xl bg-brand-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700"
           >
             {primaryLabel}
+            <ArrowRight className="h-4 w-4" />
           </Link>
           <a
             href="https://github.com/Hasse93/doclens"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
           >
+            <Code2 className="h-4 w-4" />
             View source
           </a>
         </div>
@@ -84,9 +90,12 @@ export default function Home() {
         {FEATURES.map((f) => (
           <div
             key={f.title}
-            className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
+            className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md"
           >
-            <h3 className="font-semibold text-slate-900">{f.title}</h3>
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+              <f.icon className="h-5 w-5" />
+            </span>
+            <h3 className="mt-4 font-semibold text-slate-900">{f.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">{f.body}</p>
           </div>
         ))}
