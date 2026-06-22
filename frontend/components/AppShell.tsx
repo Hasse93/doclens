@@ -38,7 +38,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-6">
             <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-sm text-white">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-500 text-sm font-semibold text-white">
                 DL
               </span>
               DocLens

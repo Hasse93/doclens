@@ -32,7 +32,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-brand-50 via-white to-white dark:from-slate-900 dark:via-slate-950 dark:to-slate-950">
       <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
         <span className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-sm text-white">
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-500 text-sm font-semibold text-white">
             DL
           </span>
           DocLens
