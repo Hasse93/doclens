@@ -44,8 +44,8 @@ export default function NotesPanel({ documentId }: { documentId: number }) {
   }
 
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-      <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+      <h2 className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
         <StickyNote className="h-4 w-4 text-brand-600" />
         Notes
       </h2>
@@ -56,7 +56,7 @@ export default function NotesPanel({ documentId }: { documentId: number }) {
           onChange={(e) => setDraft(e.target.value)}
           rows={3}
           placeholder="Jot down a thought about this document…"
-          className="w-full resize-none rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+          className="w-full resize-none rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button
@@ -73,7 +73,7 @@ export default function NotesPanel({ documentId }: { documentId: number }) {
           {notes.map((note) => (
             <li
               key={note.id}
-              className="group flex items-start justify-between gap-3 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700 ring-1 ring-slate-200"
+              className="group flex items-start justify-between gap-3 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/60 dark:text-slate-300 dark:ring-slate-700"
             >
               <span className="whitespace-pre-wrap">{note.content}</span>
               <button

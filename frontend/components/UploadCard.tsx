@@ -54,19 +54,19 @@ export default function UploadCard({
   }
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <h2 className="text-lg font-semibold text-slate-900">{heading}</h2>
-      <p className="mt-1 text-sm text-slate-500">{description}</p>
+    <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+      <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{heading}</h2>
+      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{description}</p>
 
       <div className="mt-4 space-y-3">
         <label
           htmlFor={`file-${mode}-${role}`}
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-4 py-8 text-sm text-slate-500 transition hover:border-brand-400 hover:bg-brand-50/40"
+          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-4 py-8 text-sm text-slate-500 transition hover:border-brand-400 hover:bg-brand-50/40 dark:border-slate-700 dark:text-slate-400 dark:hover:border-brand-500 dark:hover:bg-brand-500/10"
         >
           {file ? (
             <>
               <FileText className="h-6 w-6 text-brand-600" />
-              <span className="font-medium text-slate-700">{file.name}</span>
+              <span className="font-medium text-slate-700 dark:text-slate-200">{file.name}</span>
             </>
           ) : (
             <>
@@ -90,7 +90,7 @@ export default function UploadCard({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
           />
         )}
 

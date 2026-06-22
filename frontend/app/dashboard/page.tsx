@@ -56,12 +56,12 @@ export default function DashboardPage() {
         <UploadCard onUploaded={refresh} />
 
         <section>
-          <h2 className="text-lg font-semibold text-slate-900">Your documents</h2>
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Your documents</h2>
 
           {!loaded ? (
-            <p className="mt-4 text-sm text-slate-500">Loading…</p>
+            <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">Loading…</p>
           ) : documents.length === 0 ? (
-            <p className="mt-4 text-sm text-slate-500">
+            <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
               No documents yet. Upload a PDF to get started.
             </p>
           ) : (
@@ -69,14 +69,14 @@ export default function DashboardPage() {
               {documents.map((doc) => (
                 <li
                   key={doc.id}
-                  className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200"
+                  className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="truncate font-medium text-slate-900">{doc.title}</p>
+                      <p className="truncate font-medium text-slate-900 dark:text-slate-100">{doc.title}</p>
                       <StatusBadge status={doc.status} />
                     </div>
-                    <p className="mt-0.5 truncate text-xs text-slate-400">
+                    <p className="mt-0.5 truncate text-xs text-slate-400 dark:text-slate-500">
                       {doc.filename}
                       {doc.page_count > 0 && ` · ${doc.page_count} pages`}
                     </p>

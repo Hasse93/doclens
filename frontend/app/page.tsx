@@ -29,9 +29,9 @@ export default function Home() {
   const primaryLabel = user ? "Open dashboard" : "Get started";
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-brand-50 via-white to-white">
+    <main className="min-h-screen bg-gradient-to-b from-brand-50 via-white to-white dark:from-slate-900 dark:via-slate-950 dark:to-slate-950">
       <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-        <span className="flex items-center gap-2 font-semibold text-slate-900">
+        <span className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-sm text-white">
             DL
           </span>
@@ -41,7 +41,7 @@ export default function Home() {
           {!loading && !user && (
             <Link
               href="/login"
-              className="rounded-lg px-3 py-1.5 font-medium text-slate-600 transition hover:text-slate-900"
+              className="rounded-lg px-3 py-1.5 font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
             >
               Sign in
             </Link>
@@ -56,13 +56,13 @@ export default function Home() {
       </header>
 
       <section className="mx-auto max-w-3xl px-6 pb-16 pt-16 text-center sm:pt-24">
-        <span className="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">
+        <span className="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700 dark:bg-brand-500/15 dark:text-brand-100">
           AI document intelligence
         </span>
-        <h1 className="mt-5 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
+        <h1 className="mt-5 text-4xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
           See into your documents
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-600">
+        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
           Upload a PDF and DocLens reads it for you — summaries, answers grounded in
           citations, and structured insights. Built for research papers and recruiting alike.
         </p>
@@ -78,7 +78,7 @@ export default function Home() {
             href="https://github.com/Hasse93/doclens"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             <Code2 className="h-4 w-4" />
             View source
@@ -90,13 +90,13 @@ export default function Home() {
         {FEATURES.map((f) => (
           <div
             key={f.title}
-            className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md"
+            className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800"
           >
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-500/15 dark:text-brand-100">
               <f.icon className="h-5 w-5" />
             </span>
-            <h3 className="mt-4 font-semibold text-slate-900">{f.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{f.body}</p>
+            <h3 className="mt-4 font-semibold text-slate-900 dark:text-slate-100">{f.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{f.body}</p>
           </div>
         ))}
       </section>

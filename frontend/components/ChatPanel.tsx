@@ -85,14 +85,14 @@ export default function ChatPanel({ documentId }: { documentId: number }) {
   }
 
   return (
-    <div className="flex h-full flex-col rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
-      <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
+    <div className="flex h-full flex-col rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+      <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3 dark:border-slate-800">
         <div>
-          <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+          <h2 className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
             <MessagesSquare className="h-4 w-4 text-brand-600" />
             Ask this document
           </h2>
-          <p className="text-xs text-slate-400">Answers cite the pages they come from.</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Answers cite the pages they come from.</p>
         </div>
         {messages.length > 0 && (
           <button
@@ -106,7 +106,7 @@ export default function ChatPanel({ documentId }: { documentId: number }) {
 
       <div ref={scrollRef} className="flex-1 space-y-5 overflow-y-auto px-5 py-4">
         {messages.length === 0 && (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-400 dark:text-slate-500">
             Try “What problem does this paper address?” or “Summarise the results.”
           </p>
         )}
@@ -121,7 +121,7 @@ export default function ChatPanel({ documentId }: { documentId: number }) {
             </p>
           ) : (
             <div key={i} className="max-w-[90%] space-y-2">
-              <p className="whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-slate-100 px-3 py-2 text-sm text-slate-800">
+              <p className="whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-slate-100 px-3 py-2 text-sm text-slate-800 dark:bg-slate-800 dark:text-slate-100">
                 {message.content || (message.streaming ? "…" : "")}
                 {message.streaming && message.content && (
                   <span className="ml-0.5 inline-block animate-pulse">▍</span>
@@ -132,9 +132,9 @@ export default function ChatPanel({ documentId }: { documentId: number }) {
                   {message.citations.map((c) => (
                     <div
                       key={c.marker}
-                      className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600"
+                      className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300"
                     >
-                      <span className="font-semibold text-brand-700">
+                      <span className="font-semibold text-brand-700 dark:text-brand-300">
                         [{c.marker}] page {c.page_number}
                       </span>{" "}
                       — {c.snippet}
@@ -149,12 +149,12 @@ export default function ChatPanel({ documentId }: { documentId: number }) {
 
       {error && <p className="px-5 text-sm text-red-600">{error}</p>}
 
-      <form onSubmit={ask} className="flex gap-2 border-t border-slate-200 p-3">
+      <form onSubmit={ask} className="flex gap-2 border-t border-slate-200 p-3 dark:border-slate-800">
         <input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Ask a question…"
-          className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+          className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         />
         <button
           type="submit"

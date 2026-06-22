@@ -20,17 +20,17 @@ function DocList({
 }) {
   return (
     <div>
-      <h3 className="text-sm font-medium text-slate-700">{title}</h3>
+      <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">{title}</h3>
       {docs.length === 0 ? (
-        <p className="mt-2 text-xs text-slate-400">None yet.</p>
+        <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">None yet.</p>
       ) : (
         <ul className="mt-2 space-y-2">
           {docs.map((d) => (
             <li
               key={d.id}
-              className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm shadow-sm ring-1 ring-slate-200"
+              className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800"
             >
-              <span className="min-w-0 truncate text-slate-700">{d.title}</span>
+              <span className="min-w-0 truncate text-slate-700 dark:text-slate-200">{d.title}</span>
               <span className="ml-3 flex shrink-0 items-center gap-2">
                 <StatusBadge status={d.status} />
                 <button
@@ -128,15 +128,15 @@ export default function RecruitmentPage() {
             description="Upload one or more candidate résumés as PDFs."
             onUploaded={refresh}
           />
-          <div className="space-y-4 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
+          <div className="space-y-4 rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-800">
             <DocList title="Job descriptions" docs={jobs} onDelete={handleDelete} />
             <DocList title="Résumés" docs={resumes} onDelete={handleDelete} />
           </div>
         </div>
 
         <section>
-          <h2 className="text-lg font-semibold text-slate-900">Rank candidates</h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Rank candidates</h2>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Pick a job description, then score every ready résumé against it.
           </p>
 
@@ -144,7 +144,7 @@ export default function RecruitmentPage() {
             <select
               value={jobId}
               onChange={(e) => setJobId(e.target.value ? Number(e.target.value) : "")}
-              className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+              className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
             >
               <option value="">Select a job description…</option>
               {readyJobs.map((j) => (
@@ -165,7 +165,7 @@ export default function RecruitmentPage() {
           {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
           {matching && (
-            <p className="mt-6 text-sm text-slate-500">
+            <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
               Scoring résumés against the job description…
             </p>
           )}
@@ -177,7 +177,7 @@ export default function RecruitmentPage() {
           )}
 
           {!results && !matching && (
-            <p className="mt-6 text-sm text-slate-400">
+            <p className="mt-6 text-sm text-slate-400 dark:text-slate-500">
               Upload a job description and at least one résumé to get started.
             </p>
           )}

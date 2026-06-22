@@ -9,9 +9,15 @@ export const metadata: Metadata = {
     "Upload documents, ask questions with cited answers, and extract structured insights.",
 };
 
+// Applies the saved (or system) theme before paint to avoid a flash.
+const themeScript = `(function(){try{var t=localStorage.getItem('doclens_theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <AuthProvider>{children}</AuthProvider>
       </body>

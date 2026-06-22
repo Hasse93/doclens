@@ -63,8 +63,8 @@ export default function DocumentPage() {
         <>
           <header className="mt-3 flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-semibold text-slate-900">{doc.title}</h1>
-              <p className="text-sm text-slate-400">
+              <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{doc.title}</h1>
+              <p className="text-sm text-slate-400 dark:text-slate-500">
                 {doc.filename}
                 {doc.page_count > 0 && ` · ${doc.page_count} pages`}
               </p>
@@ -73,14 +73,14 @@ export default function DocumentPage() {
               <button
                 onClick={() => exportReport("md")}
                 disabled={exporting !== null}
-                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-60"
+                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 {exporting === "md" ? "Exporting…" : "Markdown"}
               </button>
               <button
                 onClick={() => exportReport("pdf")}
                 disabled={exporting !== null}
-                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-60"
+                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 {exporting === "pdf" ? "Exporting…" : "PDF"}
               </button>
@@ -88,12 +88,12 @@ export default function DocumentPage() {
           </header>
 
           {doc.summary && (
-            <div className="mt-5 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+            <div className="mt-5 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+              <h2 className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
                 <BookOpen className="h-4 w-4 text-brand-600" />
                 Summary
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">{doc.summary}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{doc.summary}</p>
             </div>
           )}
 
