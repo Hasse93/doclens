@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+import { StickyNote } from "lucide-react";
+
 import { api, ApiError } from "@/lib/api";
 import type { Note } from "@/lib/types";
 
@@ -43,7 +45,10 @@ export default function NotesPanel({ documentId }: { documentId: number }) {
 
   return (
     <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-      <h2 className="font-semibold text-slate-900">Notes</h2>
+      <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+        <StickyNote className="h-4 w-4 text-brand-600" />
+        Notes
+      </h2>
 
       <form onSubmit={add} className="mt-3 space-y-2">
         <textarea

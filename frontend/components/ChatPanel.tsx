@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { MessagesSquare } from "lucide-react";
+
 import { api, ApiError } from "@/lib/api";
 import type { Citation } from "@/lib/types";
 
@@ -86,7 +88,10 @@ export default function ChatPanel({ documentId }: { documentId: number }) {
     <div className="flex h-full flex-col rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
       <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
         <div>
-          <h2 className="font-semibold text-slate-900">Ask this document</h2>
+          <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+            <MessagesSquare className="h-4 w-4 text-brand-600" />
+            Ask this document
+          </h2>
           <p className="text-xs text-slate-400">Answers cite the pages they come from.</p>
         </div>
         {messages.length > 0 && (

@@ -8,6 +8,8 @@ import AppShell from "@/components/AppShell";
 import ChatPanel from "@/components/ChatPanel";
 import ExtractionPanel from "@/components/ExtractionPanel";
 import NotesPanel from "@/components/NotesPanel";
+import { BookOpen } from "lucide-react";
+
 import { api, ApiError } from "@/lib/api";
 import type { DocumentSummary } from "@/lib/types";
 
@@ -87,7 +89,10 @@ export default function DocumentPage() {
 
           {doc.summary && (
             <div className="mt-5 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <h2 className="font-semibold text-slate-900">Summary</h2>
+              <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+                <BookOpen className="h-4 w-4 text-brand-600" />
+                Summary
+              </h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-700">{doc.summary}</p>
             </div>
           )}

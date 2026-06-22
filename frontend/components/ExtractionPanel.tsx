@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { ListChecks } from "lucide-react";
+
 import { api, ApiError } from "@/lib/api";
 import type { ResearchExtraction } from "@/lib/types";
 
@@ -51,7 +53,10 @@ export default function ExtractionPanel({ documentId }: { documentId: number }) 
   return (
     <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-slate-900">Structured data</h2>
+        <h2 className="flex items-center gap-2 font-semibold text-slate-900">
+          <ListChecks className="h-4 w-4 text-brand-600" />
+          Structured data
+        </h2>
         <button
           onClick={run}
           disabled={loading}
