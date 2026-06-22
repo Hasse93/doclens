@@ -33,7 +33,8 @@ export default function MatchResults({ results }: { results: MatchResult[] }) {
       {results.map((r, index) => (
         <li
           key={r.resume_id}
-          className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800"
+          className="fade-up rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800"
+          style={{ animationDelay: `${index * 70}ms` }}
         >
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">

@@ -56,17 +56,26 @@ export default function Home() {
       </header>
 
       <section className="mx-auto max-w-3xl px-6 pb-16 pt-16 text-center sm:pt-24">
-        <span className="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700 dark:bg-brand-500/15 dark:text-brand-100">
+        <span className="fade-up inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700 dark:bg-brand-500/15 dark:text-brand-100">
           AI document intelligence
         </span>
-        <h1 className="mt-5 text-4xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
+        <h1
+          className="fade-up mt-5 text-4xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl"
+          style={{ animationDelay: "60ms" }}
+        >
           See into your documents
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+        <p
+          className="fade-up mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300"
+          style={{ animationDelay: "120ms" }}
+        >
           Upload a PDF and DocLens reads it for you — summaries, answers grounded in
           citations, and structured insights. Built for research papers and recruiting alike.
         </p>
-        <div className="mt-8 flex items-center justify-center gap-3">
+        <div
+          className="fade-up mt-8 flex items-center justify-center gap-3"
+          style={{ animationDelay: "180ms" }}
+        >
           <Link
             href={primaryHref}
             className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-brand-700"
@@ -87,10 +96,11 @@ export default function Home() {
       </section>
 
       <section className="mx-auto grid max-w-5xl gap-5 px-6 pb-24 sm:grid-cols-3">
-        {FEATURES.map((f) => (
+        {FEATURES.map((f, i) => (
           <div
             key={f.title}
-            className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md dark:bg-slate-900 dark:ring-slate-800"
+            className="fade-up rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900 dark:ring-slate-800"
+            style={{ animationDelay: `${240 + i * 80}ms` }}
           >
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-500/15 dark:text-brand-100">
               <f.icon className="h-5 w-5" />

@@ -103,7 +103,7 @@ export default function AskPage() {
           {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
           {answer && (
-            <div className="mt-6 space-y-4">
+            <div className="fade-up mt-6 space-y-4">
               <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
                 <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-800 dark:text-slate-200">
                   {answer.answer}
