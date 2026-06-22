@@ -1,5 +1,6 @@
 # DocLens — AI Document Intelligence Platform
 
+[![CI](https://github.com/Hasse93/doclens/actions/workflows/ci.yml/badge.svg)](https://github.com/Hasse93/doclens/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![Postgres](https://img.shields.io/badge/Postgres-pgvector-336791?logo=postgresql&logoColor=white)
@@ -21,7 +22,9 @@ The pipeline — extract → chunk → embed → store → retrieve — is ident
 both modes. Only the prompts, the extraction schema, and the output view change.
 
 > **Live demo:** **https://doclens-ecru.vercel.app** &nbsp;·&nbsp; API: https://doclens-api.onrender.com/docs
-> _(hosted on free tiers — the first request after idle can take ~30–50s while the backend wakes.)_
+> _Hosted on free tiers: the backend (Render) sleeps when idle, so the first
+> request after a while takes ~30–50s to wake, and the free Postgres is
+> time-limited. Both are platform constraints, not app issues._
 
 ## Architecture
 
