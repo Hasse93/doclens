@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend (integration test)
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: doclens
+          POSTGRES_PASSWORD: doclens
+          POSTGRES_DB: doclens
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U doclens"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+      - name: Run end-to-end integration test
+        env:
+          DATABASE_URL: postgresql+psycopg://doclens:doclens@localhost:5432/doclens
+          # A placeholder key so the app imports; the test patches in a fake LLM.
+          GEMINI_API_KEY: ci-placeholder-fake-llm
+        run: python -m tests.test_integration
+
+  frontend:
+    name: Frontend (build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
