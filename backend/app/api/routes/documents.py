@@ -2,13 +2,14 @@
 
 import re
 
-from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, UploadFile, status
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, Request, UploadFile, status
 from fastapi.responses import PlainTextResponse, Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
 from app.config import settings
+from app.core.rate_limit import limiter
 from app.database import get_db
 from app.models.document import Document
 from app.models.user import User
@@ -32,7 +33,9 @@ def _get_owned_document(db: Session, document_id: int, user: User) -> Document:
 
 
 @router.post("", response_model=DocumentOut, status_code=status.HTTP_201_CREATED)
+@limiter.limit("30/hour")
 async def upload_document(
+    request: Request,
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     title: str | None = Form(None),

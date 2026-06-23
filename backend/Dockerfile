@@ -13,4 +13,7 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# --proxy-headers + forwarded-allow-ips lets the app see the real client IP
+# (via X-Forwarded-For) behind the platform's load balancer, so per-IP rate
+# limiting is accurate.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*"]

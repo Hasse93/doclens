@@ -1,11 +1,12 @@
 """Chat routes: per-document Q&A (sync + streaming), history, and multi-document."""
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
+from app.core.rate_limit import limiter
 from app.database import get_db
 from app.models.document import Document
 from app.models.user import User
@@ -46,7 +47,9 @@ def _ready_owned_document(db: Session, document_id: int, user: User) -> Document
 
 
 @router.post("/{document_id}/chat", response_model=ChatResponse)
+@limiter.limit("30/minute")
 def chat(
+    request: Request,
     document_id: int,
     payload: ChatRequest,
     db: Session = Depends(get_db),
@@ -57,7 +60,9 @@ def chat(
 
 
 @router.post("/{document_id}/chat/stream")
+@limiter.limit("30/minute")
 def chat_stream(
+    request: Request,
     document_id: int,
     payload: ChatRequest,
     db: Session = Depends(get_db),
@@ -93,7 +98,9 @@ def clear_messages(
 
 
 @router.post("/ask", response_model=MultiChatResponse)
+@limiter.limit("30/minute")
 def ask_across_documents(
+    request: Request,
     payload: MultiChatRequest,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),

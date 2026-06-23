@@ -1,9 +1,10 @@
 """Recruitment route: rank résumés against a job description."""
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
+from app.core.rate_limit import limiter
 from app.database import get_db
 from app.models.user import User
 from app.schemas.recruitment import MatchRequest, MatchResponse
@@ -13,7 +14,9 @@ router = APIRouter(prefix="/recruitment", tags=["recruitment"])
 
 
 @router.post("/match", response_model=MatchResponse)
+@limiter.limit("20/minute")
 def match(
+    request: Request,
     payload: MatchRequest,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),

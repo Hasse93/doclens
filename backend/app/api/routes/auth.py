@@ -1,10 +1,11 @@
 """Authentication routes: register, login, and current-user lookup."""
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
+from app.core.rate_limit import limiter
 from app.core.security import create_access_token, hash_password, verify_password
 from app.database import get_db
 from app.models.user import User
@@ -14,7 +15,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-def register(payload: UserRegister, db: Session = Depends(get_db)) -> Token:
+@limiter.limit("10/hour")
+def register(request: Request, payload: UserRegister, db: Session = Depends(get_db)) -> Token:
     exists = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
     if exists is not None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
@@ -33,7 +35,8 @@ def register(payload: UserRegister, db: Session = Depends(get_db)) -> Token:
 
 
 @router.post("/login", response_model=Token)
-def login(payload: UserLogin, db: Session = Depends(get_db)) -> Token:
+@limiter.limit("20/minute")
+def login(request: Request, payload: UserLogin, db: Session = Depends(get_db)) -> Token:
     user = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
     if user is None or not verify_password(payload.password, user.hashed_password):
         raise HTTPException(

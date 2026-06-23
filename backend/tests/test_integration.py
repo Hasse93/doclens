@@ -102,6 +102,15 @@ def main() -> None:
     assert client.get("/api/documents").status_code == 401
     assert client.get("/api/auth/me", headers=headers).json()["email"] == "tester@example.com"
 
+    # Rate limiting kicks in past the per-minute login cap (20/min) -> HTTP 429.
+    statuses = [
+        client.post(
+            "/api/auth/login", json={"email": "nobody@example.com", "password": "wrong-pass"}
+        ).status_code
+        for _ in range(22)
+    ]
+    assert 429 in statuses, "expected a 429 once the login rate limit was exceeded"
+
     # Seed a fully processed document directly (mirrors what the background task
     # produces) so retrieval and chat can be exercised without file I/O.
     db = SessionLocal()

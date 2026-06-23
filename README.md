@@ -53,6 +53,7 @@ schema, and the output view differ.
 | PDF parsing    | PyMuPDF                                       |
 | LLM/embeddings | Gemini, behind an `LLMProvider` interface    |
 | Auth           | JWT (bearer tokens)                          |
+| Hardening      | Per-IP rate limiting (slowapi) + CORS allowlist |
 
 The `LLMProvider` abstraction (`backend/app/core/llm`) means no application code
 imports a vendor SDK directly — switching providers is a config change.

@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     # Comma-separated list of allowed browser origins (the deployed frontend URL).
     cors_origins: str = "http://localhost:3000"
 
+    # Per-IP rate limiting on expensive endpoints (set false to disable, e.g. in tests).
+    rate_limit_enabled: bool = True
+
     # Authentication
     jwt_secret: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
